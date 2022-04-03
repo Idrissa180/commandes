@@ -3,12 +3,6 @@ node{
     stage("SCM Checkout"){
         git credentialsId: 'git-credentials', url: 'https://github.com/enoch180/commandes.git'
     }
-    
-    stage("MVN package"){
-        def mvnHome = tool name: 'maven-tool', type: 'maven'
-        def mvnCMD = "${mvnHome}/bin/mvn"
-        sh "${mvnCMD} clean package"
-    }
 
     stage("Build Docker Image"){
         sh "docker build -t enoch180/commandes:1.0 ."
