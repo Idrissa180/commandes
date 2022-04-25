@@ -1,0 +1,37 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: commandes-app
+  namespace: default
+  labels:
+    app: commandes-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: commandes-app
+  template:
+    metadata:
+      labels:
+        app: commandes-app
+    spec:
+      containers:
+      - name: commandes-app
+        image: "enoch180/commandes:1.0"
+        ports:
+          - containerPort: 4000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: commandes-app
+  namespace: default
+spec:
+  selector:
+    app: commandes-app
+  type: LoadBalancer
+  ports:
+  - name: http
+    targetPort: 4000
+    port: 81
